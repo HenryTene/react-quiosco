@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 export default function Registro() {
   return (
     <>
@@ -42,7 +44,7 @@ export default function Registro() {
             />
           </div>
 
-            <div className="mb-4">
+          <div className="mb-4">
             <label htmlFor="password_confirmation" className="text-slate-800">
               Repetir Password:
             </label>
@@ -54,10 +56,21 @@ export default function Registro() {
               placeholder="Repetir Password"
             />
           </div>
-          <input type="submit" value="Crear Cuenta" className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3  uppercase font-bold cursor-pointer" />
-
+          <input
+            type="submit"
+            value="Crear Cuenta"
+            className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3  uppercase font-bold cursor-pointer"
+          />
         </form>
       </div>
+      <nav className="mt-5">
+        <Link
+          to="/auth/login"
+          className="text-indigo-600 hover:text-indigo-800"
+        >
+          ¿Ya tienes una cuenta? Inicia Sesión
+        </Link>
+      </nav>
     </>
   );
 }
