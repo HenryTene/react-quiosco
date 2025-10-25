@@ -2,6 +2,6 @@
 
 export default function Resumen() {
   return (
-    <div>Resumen</div>
+    <div className="w-72">Resumen</div>
   )
 }
