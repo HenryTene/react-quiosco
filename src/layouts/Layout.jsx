@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import Sidebar from "../components/Sidebar";
 import Resumen from "../components/Resumen";
 import useQuiosco from "../hooks/useQuiosco";
+import ModalProducto from "../components/ModalProducto";
 
 const customStyles = {
   content: {
@@ -30,12 +31,9 @@ export default function Layout() {
         <Resumen />
       </div>
 
-      {modal && (
-        <Modal isOpen={modal} style={customStyles} ariaHideApp={false}>
-          <p>Hola desde el modal</p>
-          <button onClick={handlleClickModal}>Cerrar</button>
-        </Modal>
-      )}
+      <Modal isOpen={modal} style={customStyles} ariaHideApp={false}>
+        <ModalProducto />
+      </Modal>
     </>
   );
 }
