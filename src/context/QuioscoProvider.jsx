@@ -6,14 +6,14 @@ const QuioscoProvider = ({ children }) => {
   const [categorias, setCategorias] = useState(categoriasDB);
   const [categoriaActual, setCategoriaActual] = useState(categorias[0]);
   const [modal, setModal] = useState(false);
-  const [Producto, setProducto] = useState({});
+  const [producto, setProducto] = useState({});
 
-  const handlleClickCategoria = (id) => {
+  const handleClickCategoria = (id) => {
     const categoria = categorias.filter((cat) => cat.id === id)[0];
     setCategoriaActual(categoria);
   };
 
-  const handlleClickModal = () => {
+  const handleClickModal = () => {
     setModal(!modal);
   }
 
@@ -26,10 +26,10 @@ const QuioscoProvider = ({ children }) => {
       value={{
         categorias,
         categoriaActual,
-        handlleClickCategoria,
+        handleClickCategoria,
         modal,
-        handlleClickModal,
-        Producto,
+        handleClickModal,
+        producto,
         handleSetProducto,
       }}
     >

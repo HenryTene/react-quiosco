@@ -1,7 +1,7 @@
 import useQuiosco from "../hooks/useQuiosco";
 
 export default function Categoria({ categoria }) {
-  const { handlleClickCategoria, categoriaActual } = useQuiosco();
+  const { handleClickCategoria, categoriaActual } = useQuiosco();
   const { icono, id, nombre } = categoria;
 
   const resaltarCategoriaActual = () => {
@@ -16,7 +16,7 @@ export default function Categoria({ categoria }) {
       <button
         className="text-lg font-bold cursor-pointer truncate"
         type="button"
-        onClick={() => handlleClickCategoria(id)}
+        onClick={() => handleClickCategoria(id)}
       >
         {nombre}
       </button>
