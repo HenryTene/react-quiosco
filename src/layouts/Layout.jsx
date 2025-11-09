@@ -15,9 +15,9 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
-
+Modal.setAppElement("#root");
 export default function Layout() {
-  const { modal, handlleClickModal } = useQuiosco();
+  const { modal, handleClickModal } = useQuiosco();
 
   console.log(modal);
 
@@ -31,7 +31,7 @@ export default function Layout() {
         <Resumen />
       </div>
 
-      <Modal isOpen={modal} style={customStyles} ariaHideApp={false}>
+      <Modal isOpen={modal} style={customStyles} >
         <ModalProducto />
       </Modal>
     </>
