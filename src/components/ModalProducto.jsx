@@ -3,7 +3,7 @@ import useQuiosco from "../hooks/useQuiosco";
 import { formatearDinero } from "../helpers";
 
 export default function ModalProducto() {
-  const { producto, handleClickModal } = useQuiosco();
+  const { producto, handleClickModal, handleAgregarPedido } = useQuiosco();
   const [cantidad, setCantidad] = useState(1);
 
   return (
@@ -89,6 +89,10 @@ export default function ModalProducto() {
         <button
           type="button"
           className="bg-indigo-600 hover:bg-indigo-800 px-5 py-2 mt-5  text-white font-bold  uppercase  rounded"
+          onClick={() => {
+            handleAgregarPedido({...producto, cantidad})
+            handleClickModal()
+          }}
         >
           Añadir al pedido
         </button>
