@@ -22,7 +22,7 @@ const QuioscoProvider = ({ children }) => {
     setProducto(producto);
   }
 
-  const handleAgregarPedido = ({categoria_id, imagen, producto}) => {
+  const handleAgregarPedido = (producto) => {
     //console.log(producto);
     setPedido([...pedido, producto])
   }
