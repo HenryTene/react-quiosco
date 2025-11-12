@@ -18,9 +18,15 @@ const QuioscoProvider = ({ children }) => {
     setModal(!modal);
   }
 
-  const handleSetProducto = (producto) => {
+  const handleSetProducto = producto => {
     setProducto(producto);
   }
+
+  const handleAgregarPedido = ({categoria_id, imagen, producto}) => {
+    //console.log(producto);
+    setPedido([...pedido, producto])
+  }
+
 
   return (
     <QuioscoContext.Provider
@@ -33,6 +39,7 @@ const QuioscoProvider = ({ children }) => {
         producto,
         handleSetProducto,
         pedido,
+        handleAgregarPedido,
       }}
     >
       {children}
