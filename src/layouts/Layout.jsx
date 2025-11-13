@@ -17,9 +17,7 @@ const customStyles = {
 };
 Modal.setAppElement("#root");
 export default function Layout() {
-  const { modal, handleClickModal } = useQuiosco();
-
-  console.log(modal);
+  const { modal } = useQuiosco();
 
   return (
     <>
@@ -31,7 +29,7 @@ export default function Layout() {
         <Resumen />
       </div>
 
-      <Modal isOpen={modal} style={customStyles} >
+      <Modal isOpen={modal} style={customStyles}>
         <ModalProducto />
       </Modal>
     </>
