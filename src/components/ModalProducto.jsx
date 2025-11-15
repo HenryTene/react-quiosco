@@ -15,8 +15,13 @@ export default function ModalProducto() {
       )[0];
       setCantidad(productoEdicion.cantidad);
       setEdicion(true);
+      console.log(productoEdicion);
+    }else{
+      setCantidad(1);
+      setEdicion(false);
+      console.log("hola");
     }
-  }, [pedido]);
+  }, [pedido,producto]);
 
   return (
     <div className="md-flex items-center gap-10">

@@ -16,17 +16,26 @@ const QuioscoProvider = ({ children }) => {
 
   const handleClickModal = () => {
     setModal(!modal);
-  }
+  };
 
-  const handleSetProducto = producto => {
+  const handleSetProducto = (producto) => {
     setProducto(producto);
-  }
+  };
 
-  const handleAgregarPedido = (producto) => {
-    //console.log(producto);
-    setPedido([...pedido, producto])
-  }
-
+  const handleAgregarPedido = ({ categoria_id, ...producto }) => {
+    setPedido((currentPedido) => {
+      if (
+        currentPedido.some((pedidoState) => pedidoState.id === producto.id)
+      ) {
+        const pedidoActualizado = currentPedido.map((pedidoState) =>
+          pedidoState.id === producto.id ? producto : pedidoState
+        );
+        return pedidoActualizado;
+      } else {
+        return [...currentPedido, producto];
+      }
+    });
+  };
 
   return (
     <QuioscoContext.Provider
