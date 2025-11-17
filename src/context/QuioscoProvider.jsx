@@ -25,9 +25,7 @@ const QuioscoProvider = ({ children }) => {
 
   const handleAgregarPedido = ({ categoria_id, ...producto }) => {
     setPedido((currentPedido) => {
-      if (
-        currentPedido.some((pedidoState) => pedidoState.id === producto.id)
-      ) {
+      if (currentPedido.some((pedidoState) => pedidoState.id === producto.id)) {
         const pedidoActualizado = currentPedido.map((pedidoState) =>
           pedidoState.id === producto.id ? producto : pedidoState
         );
@@ -38,6 +36,13 @@ const QuioscoProvider = ({ children }) => {
         return [...currentPedido, producto];
       }
     });
+  };
+
+  const handleEditarCantidad = (id) => {
+   
+    const productoActualizar = pedido.filter((pedidoState) => pedidoState.id === id)[0];
+    setProducto(productoActualizar);
+    setModal(!modal);
   };
 
   return (
@@ -52,6 +57,7 @@ const QuioscoProvider = ({ children }) => {
         handleSetProducto,
         pedido,
         handleAgregarPedido,
+        handleEditarCantidad,
       }}
     >
       {children}
