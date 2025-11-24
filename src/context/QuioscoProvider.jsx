@@ -1,16 +1,16 @@
-import { createContext, useState,useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { categorias as categoriasDB } from "../data/categorias";
+
+import axios from "axios";
 
 const QuioscoContext = createContext();
 const QuioscoProvider = ({ children }) => {
-  const [categorias, setCategorias] = useState(categoriasDB);
-  const [categoriaActual, setCategoriaActual] = useState(categorias[0]);
+  const [categorias, setCategorias] = useState([]);
+  const [categoriaActual, setCategoriaActual] = useState({});
   const [modal, setModal] = useState(false);
   const [producto, setProducto] = useState({});
   const [pedido, setPedido] = useState([]);
   const [total, setTotal] = useState(0);
-
 
   useEffect(() => {
     const nuevoTotal = pedido.reduce(
@@ -20,7 +20,19 @@ const QuioscoProvider = ({ children }) => {
     setTotal(nuevoTotal);
   }, [pedido]);
 
+  const obtenerCategorias = async () => {
+    try {
+      const { data } = await axios.get("http://localhost/api/categorias");
+      setCategorias(data.data);
+      setCategoriaActual(data.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    obtenerCategorias();
+  }, []);
 
   const handleClickCategoria = (id) => {
     const categoria = categorias.filter((cat) => cat.id === id)[0];
@@ -51,12 +63,12 @@ const QuioscoProvider = ({ children }) => {
   };
 
   const handleEditarCantidad = (id) => {
-   
-    const productoActualizar = pedido.filter((producto) => producto.id === id)[0];
+    const productoActualizar = pedido.filter(
+      (producto) => producto.id === id
+    )[0];
     setProducto(productoActualizar);
     setModal(!modal);
   };
-
 
   const handleEliminarProductoPedido = (id) => {
     const pedidoActualizado = pedido.filter((producto) => producto.id !== id);
