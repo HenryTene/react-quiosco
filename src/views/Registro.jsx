@@ -23,7 +23,11 @@ export default function Registro() {
       const respuesta = await clienteAxios.post("/api/registro", datos);
       console.log(respuesta);
     } catch (error) {
-      setErrores(Object.values(error.response.data.errors));
+      if (error.response && error.response.data && error.response.data.errors) {
+        setErrores(Object.values(error.response.data.errors));
+      } else {
+        setErrores(["Hubo un error al crear la cuenta. Intenta más tarde."]);
+      }
     }
   };
 
