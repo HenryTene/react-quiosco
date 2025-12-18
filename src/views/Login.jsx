@@ -33,6 +33,11 @@ export default function Login() {
       <p>Para crear un pedido debes iniciar Sesión</p>
       <div className="bg-white shadow-md rounded-md mt-10 px-5 py-10">
         <form onSubmit={handleSubmit} noValidate>
+          {errores
+            ? errores.map((error, index) => (
+                <Alerta key={index}>{error}</Alerta>
+              ))
+            : null}
           <div className="mb-4">
             <label htmlFor="email" className="text-slate-800">
               Email:
