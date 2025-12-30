@@ -40,7 +40,22 @@ export const useAuth = ({ middleware, url }) => {
 
   const registro = () => {};
 
-  const logout = () => {};
+  const logout = async () => {
+    try {
+      await clienteAxios.post("/api/logout", null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      localStorage.removeItem("AUTH_TOKEN");
+      localStorage.removeItem("AUTH_TOKEN");
+      await mutate(null, {
+        revalidate: false,
+      });
+    } catch (error) {
+      throw Error(error?.response?.data?.errors);
+    }
+  };
 
   console.log(user);
   console.log(error);
