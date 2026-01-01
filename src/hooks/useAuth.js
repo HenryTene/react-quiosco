@@ -38,12 +38,38 @@ export const useAuth = ({ middleware, url }) => {
     }
   };
 
-  const registro = () => {};
+  const registro = async (datos, setErrores) => {
+    try {
+      const { data } = await clienteAxios.post("/api/registro", datos);
+      localStorage.setItem("AUTH_TOKEN", data.token);
+      setErrores([]);
+      await mutate();
+      navigate(url);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        setErrores(Object.values(error.response.data.errors));
+      } else {
+        setErrores(["Hubo un error al crear la cuenta. Intenta más tarde."]);
+      }
+    }
+  };
 
-  const logout = () => {};
-
-  console.log(user);
-  console.log(error);
+  const logout = async () => {
+    try {
+      await clienteAxios.post("/api/logout", null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      localStorage.removeItem("AUTH_TOKEN");
+      localStorage.removeItem("AUTH_TOKEN");
+      await mutate(null, {
+        revalidate: false,
+      });
+    } catch (error) {
+      throw Error(error?.response?.data?.errors);
+    }
+  };
 
   useEffect(() => {
     if (middleware === "guest" && url && user) {
