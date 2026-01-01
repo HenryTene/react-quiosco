@@ -1,7 +1,7 @@
 import { createRef, useState } from "react";
 import { Link } from "react-router-dom";
-import clienteAxios from "../config/axios";
 import Alerta from "../components/Alerta";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Registro() {
   const nameRef = createRef();
@@ -9,6 +9,7 @@ export default function Registro() {
   const passwordRef = createRef();
   const passwordConfirmationRef = createRef();
   const [errores, setErrores] = useState([]);
+  const { registro } = useAuth({ middleware: "guest", url: "/auth/login" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,16 +20,7 @@ export default function Registro() {
       password: passwordRef.current.value,
       password_confirmation: passwordConfirmationRef.current.value,
     };
-    try {
-      const { data } = await clienteAxios.post("/api/registro", datos);
-      console.log(data.token);
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.errors) {
-        setErrores(Object.values(error.response.data.errors));
-      } else {
-        setErrores(["Hubo un error al crear la cuenta. Intenta más tarde."]);
-      }
-    }
+    registro(datos, setErrores);
   };
 
   return (

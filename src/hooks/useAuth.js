@@ -38,7 +38,21 @@ export const useAuth = ({ middleware, url }) => {
     }
   };
 
-  const registro = () => {};
+  const registro = async (datos, setErrores) => {
+    try {
+      const { data } = await clienteAxios.post("/api/registro", datos);
+      localStorage.setItem("AUTH_TOKEN", data.token);
+      setErrores([]);
+      await mutate();
+      navigate(url);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        setErrores(Object.values(error.response.data.errors));
+      } else {
+        setErrores(["Hubo un error al crear la cuenta. Intenta más tarde."]);
+      }
+    }
+  };
 
   const logout = async () => {
     try {
@@ -56,9 +70,6 @@ export const useAuth = ({ middleware, url }) => {
       throw Error(error?.response?.data?.errors);
     }
   };
-
-  console.log(user);
-  console.log(error);
 
   useEffect(() => {
     if (middleware === "guest" && url && user) {
