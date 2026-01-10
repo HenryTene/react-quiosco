@@ -62,7 +62,7 @@ export const useAuth = ({ middleware, url }) => {
         },
       });
       localStorage.removeItem("AUTH_TOKEN");
-      localStorage.removeItem("AUTH_TOKEN");
+
       await mutate(null, {
         revalidate: false,
       });
