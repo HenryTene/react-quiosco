@@ -81,7 +81,9 @@ const QuioscoProvider = ({ children }) => {
     try {
       const { data } = await clienteAxios.post(
         "/api/pedidos",
-        {},
+        {
+          total,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
