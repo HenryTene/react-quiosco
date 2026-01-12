@@ -76,13 +76,17 @@ const QuioscoProvider = ({ children }) => {
     toast.success("Producto Eliminado Correctamente");
   };
 
-  const handleSubmitNuevaOrden = async (e) => {
+  const handleSubmitNuevaOrden = async (logout) => {
     const token = localStorage.getItem("AUTH_TOKEN");
     try {
       const { data } = await clienteAxios.post(
         "/api/pedidos",
         {
           total,
+          productos: pedido.map((producto) => ({
+            id: producto.id,
+            cantidad: producto.cantidad,
+          })),
         },
         {
           headers: {
@@ -90,7 +94,16 @@ const QuioscoProvider = ({ children }) => {
           },
         }
       );
-      console.log(data);
+      toast.success(data.message);
+      setTimeout(() => {
+        setPedido([]);
+        setTotal(0);
+      }, 1000);
+
+      // Cerrar la sesión del usuario
+      setTimeout(() => {
+        logout().catch(console.error);
+      }, 3000);
     } catch (error) {
       console.log(error);
     }

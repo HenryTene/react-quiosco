@@ -11,7 +11,7 @@ export const useAuth = ({ middleware, url }) => {
     data: user,
     error,
     mutate,
-  } = useSWR("/api/user", () =>
+  } = useSWR(token ? "/api/user" : null, () =>
     clienteAxios("/api/user", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -61,13 +61,12 @@ export const useAuth = ({ middleware, url }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      localStorage.removeItem("AUTH_TOKEN");
-
-      await mutate(null, {
-        revalidate: false,
-      });
     } catch (error) {
-      throw Error(error?.response?.data?.errors);
+      console.log(error);
+    } finally {
+      localStorage.removeItem("AUTH_TOKEN");
+      await mutate(undefined, { revalidate: false });
+      navigate("/auth/login");
     }
   };
 
