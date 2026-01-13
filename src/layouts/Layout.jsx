@@ -25,9 +25,6 @@ export default function Layout() {
 
   const { modal } = useQuiosco();
 
-  console.log(user);
-  console.log(error);
-
   return (
     <>
       <div className="md:flex md:min-h-screen">
