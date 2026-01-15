@@ -1,6 +1,23 @@
-import React from "react";
+import useSWR from "swr";
+import clienteAxios from "../config/axios";
+import useQuiosco from "../hooks/useQuiosco";
 
 export default function Ordenes() {
+  const token = localStorage.getItem("AUTH_TOKEN");
+
+  const fetcher = () =>
+    clienteAxios.get("/api/pedidos", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+  const { data, error, isLoading } = useSWR("/api/pedidos", fetcher);
+
+  console.log(data);
+  console.log(error);
+  console.log(isLoading);
+
   return (
     <div>
       {" "}
