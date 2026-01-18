@@ -14,7 +14,7 @@ export default function Ordenes() {
 
   const { data, error, isLoading } = useSWR("/api/pedidos", fetcher);
 
-  console.log(data);
+  console.log(data?.data);
   console.log(error);
   console.log(isLoading);
 
