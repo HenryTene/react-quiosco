@@ -15,7 +15,7 @@ const QuioscoProvider = ({ children }) => {
   useEffect(() => {
     const nuevoTotal = pedido.reduce(
       (total, producto) => total + producto.cantidad * producto.precio,
-      0
+      0,
     );
     setTotal(nuevoTotal);
   }, [pedido]);
@@ -51,7 +51,7 @@ const QuioscoProvider = ({ children }) => {
     setPedido((currentPedido) => {
       if (currentPedido.some((pedidoState) => pedidoState.id === producto.id)) {
         const pedidoActualizado = currentPedido.map((pedidoState) =>
-          pedidoState.id === producto.id ? producto : pedidoState
+          pedidoState.id === producto.id ? producto : pedidoState,
         );
         toast.success("Producto Actualizado Correctamente");
         return pedidoActualizado;
@@ -64,7 +64,7 @@ const QuioscoProvider = ({ children }) => {
 
   const handleEditarCantidad = (id) => {
     const productoActualizar = pedido.filter(
-      (producto) => producto.id === id
+      (producto) => producto.id === id,
     )[0];
     setProducto(productoActualizar);
     setModal(!modal);
@@ -92,7 +92,7 @@ const QuioscoProvider = ({ children }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       toast.success(data.message);
       setTimeout(() => {
@@ -104,6 +104,20 @@ const QuioscoProvider = ({ children }) => {
       setTimeout(() => {
         logout().catch(console.error);
       }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCompletarPedido = async (id) => {
+    const token = localStorage.getItem("AUTH_TOKEN");
+    try {
+      const { data } = await clienteAxios.put(`/api/pedidos/${id}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success(data.message);
     } catch (error) {
       console.log(error);
     }
@@ -125,6 +139,7 @@ const QuioscoProvider = ({ children }) => {
         handleEliminarProductoPedido,
         total,
         handleSubmitNuevaOrden,
+        handleCompletarPedido,
       }}
     >
       {children}
