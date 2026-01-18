@@ -19,13 +19,8 @@ export default function Ordenes() {
   });
   const { handleCompletarPedido } = useQuiosco();
 
-  if (isLoading) {
-    return <div>Cargando...</div>;
-  }
-
-  if (error) {
-    return <div>Error al cargar los pedidos</div>;
-  }
+  if (isLoading) return "Cargando...";
+  console.log(data.data.data);
 
   return (
     <div>
